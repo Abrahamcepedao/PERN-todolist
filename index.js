@@ -2,10 +2,17 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const pool = require("./db");
+const PORT = process.env.PORT || 5000
+
+
 
 /* <----middleware-----> */
 app.use(cors());
 app.use(express.json()); //req.body
+
+if(process.env.NODE_ENV === "production"){
+    app.use(express.static("client/build"))
+}
 
 /* <----routes-----> */
 //create todo
@@ -56,13 +63,13 @@ app.put("/todos/:id", async (req, res) => {
 app.delete("/todos/:id", async (req, res) => {
     try {
         const { id } = req.params;
-        const deleteTodo = await pool.query("delete from todo where todo_id = $1", [id]);
+        const _ = await pool.query("delete from todo where todo_id = $1", [id]);
         res.json("todo was deleted")
     } catch (err) {
         console.error(err.message);
     }
 })
 
-app.listen(5000, () => {
-    console.log("Server has started on port 5000");
+app.listen(PORT, () => {
+    console.log(`Server has started on port ${PORT}`);
 })
