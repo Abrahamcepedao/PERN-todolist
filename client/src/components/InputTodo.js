@@ -7,7 +7,10 @@ export default function InputTodo() {
         e.preventDefault();
         try {
             const body = { description };
-            const response = await fetch("http://localhost:5000/todos", {
+
+            //proxy
+
+            const response = await fetch(`/todos`, {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(body)
@@ -24,7 +27,7 @@ export default function InputTodo() {
             <h1>Pern todo list</h1>
             <form onSubmit={onSubmitForm}>
                 <input placeholder="todo" value={description} onChange={(e) => {setDescription(e.target.value)}} type="text"/>
-                <button>Add</button>
+                <button type="submit">Add</button>
             </form>
         </Fragment>
     )

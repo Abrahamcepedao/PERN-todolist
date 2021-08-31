@@ -8,7 +8,7 @@ export default function ListTodos() {
 
     const fetchTodos = async () => {
         try {
-            const response = await fetch("http://localhost:5000/todos")
+            const response = await fetch("/todos")
             const jsonData = await response.json()
             console.log(jsonData)
             setTodos(jsonData)
@@ -24,7 +24,7 @@ export default function ListTodos() {
 
     const handleDelete = async(id) => {
         try {
-            const response = await fetch(`http://localhost:5000/todos/${id}`, {
+            const response = await fetch(`/todos/${id}`, {
                 method: "DELETE"
             })
             console.log(response)
@@ -43,8 +43,8 @@ export default function ListTodos() {
             {todos.length !== 0 && todos.map((item, i) => (
                 <div key={i}>
                     <h2>{item.description}</h2>
-                    <EditTodo onClick={() => { handleDelete(item.todo_id) }}>delete</EditTodo>
-                    <button onClick={() => {handleEdit(item)}}>edit</button>
+                    <button onClick={() => { handleDelete(item.todo_id)}}>delete</button>
+                    <EditTodo/>
                 </div>
             ))}
         </div>
