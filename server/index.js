@@ -20,7 +20,7 @@ app.post("/todos", async(req, res) => {
     }
 })
 //get all todos
-app.get("/todos", async(req, res) => {
+app.get("/todos", async(_, res) => {
     try{
         const allTodos = await pool.query("select * from todo");
         res.json(allTodos.rows)
@@ -45,7 +45,7 @@ app.put("/todos/:id", async (req, res) => {
     try {
         const { id } = req.params;
         const { description } = req.body;
-        const updateTodo = await pool.query("update todo set description = $1 where todo_id = $2", [description, id]);
+        const _ = await pool.query("update todo set description = $1 where todo_id = $2", [description, id]);
         res.json("todo was updated")
     } catch (err) {
         console.error(err.message);
